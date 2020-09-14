@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # Konfiguracja połączenia do bazy danych MySQL
 app.config['MYSQL_DATABASE_USER'] = '07438848_python'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'python-nauka'
+app.config['MYSQL_DATABASE_PASSWORD'] = ''
 app.config['MYSQL_DATABASE_DB'] = '07438848_python'
 app.config['MYSQL_DATABASE_HOST'] = 'sql.fxsystems.com.pl'
 app.config['MYSQL_DATABASE_PORT'] = 3306
