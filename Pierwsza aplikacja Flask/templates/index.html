@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Przykład przetworzenia danych Python - Flask</title>
+  </head>
+  <body>
+    <form method="POST" action="">
+      Jak masz na imię? <br>
+	  <input type="text" name="name">
+      <input type="submit" name="submit" value="Zapisz">
+    </form>
+    {% if name %}
+      <h1>Witaj, {{name}}!</h1>
+    {% endif %}
+  </body>
+</html>
