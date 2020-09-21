@@ -4,17 +4,17 @@ from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import InputRequired
 
-app = Flask(__name__) #to jest coś w rodzaju unitu/modułu
+app = Flask(__name__) #to jest co? w rodzaju unitu/modu?u
 
 #####################################################################################
-# Tu definiujemy obiekt bazy danych i elementy podłączenia do niego, oraz wymagane parametry
+# Tu definiujemy obiekt bazy danych i elementy podlaczenia do niego, oraz wymagane parametry
 app.config['SECRET_KEY'] = 'super secret key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/mydatabase.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
 #####################################################################################
-# Tu definiujemy klasę odpowiedzialną za wymianę informacji z bazą danych
+# Tu definiujemy klase odpowiedzialna za wymiane informacji z baza danych
 #####################################################################################
 class User(db.Model):
     __tablename__ = 'users'
@@ -30,42 +30,42 @@ class User(db.Model):
         return '<User %r>' % self.name
     
 #####################################################################################
-# Tu definiujemy klasę do pobierania danych z formy
+# Tu definiujemy klase do pobierania danych z formy
 #####################################################################################
 class UserForm(FlaskForm):
-    name = StringField('Imię i nazwisko', validators=[InputRequired()])
+    name = StringField('Imie i nazwisko', validators=[InputRequired()])
     email = StringField('Adres e-mail', validators=[InputRequired()])
     
 #####################################################################################
-# Definicja komunikatu błędu
+# Definicja komunikatu bledu
 #####################################################################################
 def flash_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
-            flash(u"Błąd w %s rekordzie - %s" % (getattr(form, field).label.text, error))
+            flash(u"B??d w %s rekordzie - %s" % (getattr(form, field).label.text, error))
 #####################################################################################    
 
 #####################################################################################
-# Tu jest obsługa wszystkich wywołań strony i podstron jako funkcje obsługujące dane wywołanie
+# Tu jest obsluga wszystkich wywolan strony i podstron jako funkcje obslugujace dane wywolanie
 
 @app.route('/')
 def start():
     return render_template('index.html')
 
-@app.route('/index.html')
+@app.route('/index')
 def index():
     return render_template('index.html')
 
-@app.route('/oprojekcie.html')
+@app.route('/oprojekcie')
 def oprojekcie():
     return render_template('oprojekcie.html')
 
-@app.route('/listauzytkownikow.html')
+@app.route('/listauzytkownikow')
 def listauzytkownikow():
     users = db.session.query(User).all()
     return render_template('listauzytkownikow.html', users=users)
 
-@app.route('/dodajuzytkownika.html', methods=['POST', 'GET'])
+@app.route('/dodajuzytkownika', methods=['POST', 'GET'])
 def dodajuzytkownika():
     user_form = UserForm()
 
@@ -80,14 +80,14 @@ def dodajuzytkownika():
             db.session.add(user)
             db.session.commit()
 
-            flash('Użytkownik poprawnie dodany!')
+            flash('Uzytkownik poprawnie dodany!')
             return redirect(url_for('listauzytkownikow'))
 
     flash_errors(user_form)
     return render_template('dodajuzytkownika.html', form=user_form)
 
 #####################################################################################
-# Tu uruchamiamy samą aplikację na określonych parametrach - np. na jakimś porcie
+# Tu uruchamiamy sama aplikacje na okreslonych parametrach - np. na jakims porcie
 if __name__ == '__main__':
     app.run(port=5002)
 
